@@ -3,7 +3,6 @@ require 'uri'
 require 'open-uri'
 
 require_relative 'topic'
-require_relative 'store'
 
 class Tieba
   attr_accessor :page, :topic
@@ -11,6 +10,7 @@ class Tieba
   def initialize(name)
     @name = name
     @pn = 0
+    @prev_topic_titles = []
     fetch
   end
 
@@ -23,13 +23,16 @@ class Tieba
     @page = Nokogiri::HTML(open url)
   end
 
-  def topics
+  def topic_nodes
     page.css('.t_con.cleafix')
   end
 
   def serialize
-    topics.each do |topic|
-      Store.create(Topic.serialize(topic))
+    @prev_topic_titles = topic_nodes.map do |topic_node|
+      topic = Topic.from_node(topic_node)
+      next if @prev_topic_titles.include?(topic.title)
+      topic.save
+      topic.title
     end
   end
 
@@ -38,4 +41,3 @@ class Tieba
     URI.escape("https://tieba.baidu.com/f?kw=#{@name}&ie=utf-8&pn=#{@pn}")
   end
 end
-

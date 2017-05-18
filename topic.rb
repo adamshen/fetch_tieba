@@ -1,32 +1,15 @@
-class Topic
-  attr_accessor :doc
+require 'active_record'
 
-  def initialize(nk_node)
-    @doc = nk_node
-  end
+ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'store.sqlite3').connection
 
-  def self.serialize(nk_node)
-    new(nk_node).serialize
-  end
+class Topic < ActiveRecord::Base
+  def self.from_node(nk_node)
+    topic = new
 
-  def serialize
-    {
-        author: author,
-        title: title,
-        rep_num: rep_num
-    }
-  end
+    topic.author = nk_node.css('.frs-author-name-wrap a').first.text rescue nil
+    topic.title = nk_node.css('.threadlist_title a').first.attributes['title'].value rescue nil
+    topic.rep_num = nk_node.css('.threadlist_rep_num').first.text rescue nil
 
-  private
-  def author
-    doc.css('.frs-author-name-wrap a').first.text
-  end
-
-  def title
-    doc.css('.threadlist_title a').first.attributes['title'].value
-  end
-
-  def rep_num
-    doc.css('.threadlist_rep_num').first.text
+    topic
   end
 end
