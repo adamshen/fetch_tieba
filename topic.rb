@@ -12,7 +12,7 @@ class Topic
   def serialize
     {
         author: author,
-        tilte: title,
+        title: title,
         rep_num: rep_num
     }
   end

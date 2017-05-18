@@ -3,6 +3,7 @@ require 'uri'
 require 'open-uri'
 
 require_relative 'topic'
+require_relative 'store'
 
 class Tieba
   attr_accessor :page, :topic
@@ -19,7 +20,7 @@ class Tieba
   end
 
   def fetch
-    @page = Nokogiri::HTML(open URI.escape(url))
+    @page = Nokogiri::HTML(open url)
   end
 
   def topics
@@ -27,13 +28,14 @@ class Tieba
   end
 
   def serialize
-    topics.map do |topic|
-      Topic.serialize(topic)
+    topics.each do |topic|
+      Store.create(Topic.serialize(topic))
     end
   end
 
   private
   def url
-    "https://tieba.baidu.com/f?kw=#{@name}&ie=utf-8&pn=#{@pn}"
+    URI.escape("https://tieba.baidu.com/f?kw=#{@name}&ie=utf-8&pn=#{@pn}")
   end
 end
+
