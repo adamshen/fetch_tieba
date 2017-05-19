@@ -3,28 +3,52 @@
 ### Todo
 - 爬取内容
 - Timeout以及FormatError处理
-- 通过ActiveRecord存入数据库
 
+### 用法
+
+```bash
+创建数据库
+
+rake create_db
+
+Demo(爬取阿森纳吧前100页)
+
+rake demo
 ```
-Tieba.new('阿森纳').serialize 
 
-=> 
-[{:author=>"l只小灰狼", :tilte=>"【小灰狼】2016-17赛季——联赛第三十四轮补赛", :rep_num=>"54"},
- {:author=>"海参崴", :tilte=>"米堡一个赛季就进了27个球", :rep_num=>"52"},
- {:author=>"易帝骑毅帝", :tilte=>"利物浦最后一轮不是有人滑倒就是有人回传。", :rep_num=>"23"},
- {:author=>"根本岸久西", :tilte=>"作死之挑战厂吧权威", :rep_num=>"36"},
- {:author=>"佩沙云", :tilte=>"温格回应有关科拉西纳兹的消息：目前没什么好说的", :rep_num=>"23"},
- {:author=>"Bear少", :tilte=>"拉维奇洗不白的", :rep_num=>"149"},
- {:author=>"伯恩的路", :tilte=>"不给力的破厂，下赛季黄萨仁集体老迈低迷，却没欧冠资格。", :rep_num=>"10"},
- {:author=>"adspion", :tilte=>"有什么好的减肥方法呀", :rep_num=>"16"},
- {:author=>"爱德华11诺顿", :tilte=>"大家来猜猜这俩还没开的店是卖什么的？", :rep_num=>"10"},
- {:author=>"花布加蕾丝", :tilte=>"温格：桑德兰展现出来的战斗精神是英超所需要的。", :rep_num=>"4"},
- {:author=>"music1man", :tilte=>"吉鲁风骚停球", :rep_num=>"9"},
- {:author=>"corry1998", :tilte=>"我就问问，老哥们上大学的时候一年体重涨多少", :rep_num=>"4"},
- {:author=>"枪手之魂411", :tilte=>"别水了 出大事了 曼狗愿赌服输了", :rep_num=>"25"},
- {:author=>"丁耀扬22", :tilte=>"吉布斯我看的真要吐了，这水平老子真不服也能在阿森纳踢球", :rep_num=>"26"},
- {:author=>"花布加蕾丝", :tilte=>"袁腾飞：我可能是生错地方了，想穿越回宋朝，那里对文人最友善！", :rep_num=>"153"},
- {:author=>"马尔福的眼泪", :tilte=>"震惊？波飞机示好热刺！赞叹白鹿巷勇士们的成绩！", :rep_num=>"20"},
- ...
-]
+### 数据
+
+```ruby
+User.all
+=>...
+ #<User:0x007fa39fc2eb20 id: 1976, name: "威尔谢儿">,
+ #<User:0x007fa39fc2e788 id: 1977, name: "东亚冲冲冲">,
+ #<User:0x007fa39fc2e4b8 id: 1978, name: "TTdesign29">,
+ #<User:0x007fa39fc2e198 id: 1979, name: "兵工厂尛帅">,
+ #<User:0x007fa39fc2def0 id: 1980, name: "hbgo1234">,
+ #<User:0x007fa39fc2dbd0 id: 1981, name: "你我的怡宝4">,
+ #<User:0x007fa39fc2d6a8 id: 1982, name: "weihua852368">,
+ #<User:0x007fa39fc2d360 id: 1983, name: "madeinchina77">,
+ #<User:0x007fa39fc2d108 id: 1984, name: "枪手_小胖胖">,
+ #<User:0x007fa39fc2cc58 id: 1985, name: "M罗伊斯11">,
+ #<User:0x007fa39fc2c758 id: 1986, name: "tot3mol">,
+ #<User:0x007fa39fc2c488 id: 1987, name: "skillfulyan">,
+ #<User:0x007fa39fc2c168 id: 1988, name: "耐久光环嗜血术">,
+ #<User:0x007fa39fc2e8a0 id: 1989, name: "划掉的线">,
+ #<User:0x007fa39fd4ff18 id: 1990, name: "BeneGod">,
+ #<User:0x007fa39fd4fdd8 id: 1991, name: "jnlsjy2100917">]
+
+
+Topic.all
+=>...
+ #<Topic:0x007fa39d225540 id: 4960, title: "欧冠四强排行榜", rep_num: 62, user_id: 174>,
+ #<Topic:0x007fa39d225400 id: 4961, title: "龟代弟肆虐梦剧场 塞尔塔5球击溃愚笨红魔", rep_num: 0, user_id: 1988>,
+ #<Topic:0x007fa39d225270 id: 4962, title: "老哥们，这样的算吧均吗？", rep_num: 9, user_id: 59>,
+ #<Topic:0x007fa39d2250e0 id: 4963, title: "眼神有用要中国警察干嘛？！拿刀砍他！！！", rep_num: 4, user_id: 16>,
+ #<Topic:0x007fa39d224fa0 id: 4964, title: "切赫：零封给了我们自信", rep_num: 8, user_id: 19>,
+ #<Topic:0x007fa39d224e38 id: 4965, title: "不得不说，断联真的是个放下的好办法", rep_num: 2, user_id: 1989>,
+ #<Topic:0x007fa39d224cf8 id: 4966, title: "球衣背后写的是球员名字，准没错。。", rep_num: 8, user_id: 68>,
+ #<Topic:0x007fa39d224bb8 id: 4967, title: "懂球帝发众筹声援教授", rep_num: 48, user_id: 1990>,
+ #<Topic:0x007fa39d224a78 id: 4968, title: "今年其实就缺个B2B，后腰。不然至少是个亚军，看看丢球数太多", rep_num: 0, user_id: 1991>,
+ #<Topic:0x007fa39d224938 id: 4969, title: "孟书记：坚决清除工安系统害群之马", rep_num: 0, user_id: 1780>]
 ```

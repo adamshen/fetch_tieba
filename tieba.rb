@@ -2,7 +2,13 @@ require 'nokogiri'
 require 'uri'
 require 'open-uri'
 
-require_relative 'topic'
+require 'active_record'
+ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'store.sqlite3').connection
+
+require_relative 'models/topic'
+require_relative 'models/user'
+
+require_relative 'lib/node'
 
 class Tieba
   attr_accessor :page, :topic
@@ -29,7 +35,7 @@ class Tieba
 
   def serialize
     @prev_topic_titles = topic_nodes.map do |topic_node|
-      topic = Topic.from_node(topic_node)
+      topic = Node.serialize(topic_node)
       next if @prev_topic_titles.include?(topic.title)
       topic.save
       topic.title
