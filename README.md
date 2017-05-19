@@ -1,6 +1,8 @@
 ## 贴吧爬虫
 
 ### Todo
+- logger
+- test
 - 爬取内容
 - Timeout以及FormatError处理
 
