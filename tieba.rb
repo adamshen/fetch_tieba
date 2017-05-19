@@ -12,7 +12,7 @@ require_relative 'lib/node'
 require_relative 'lib/logger'
 
 class Tieba
-  attr_accessor :page, :topic, :page_num
+  attr_accessor :page
 
   def initialize(name)
     @name = name
@@ -24,16 +24,6 @@ class Tieba
   def next_page
     @pn += 50
     fetch
-  end
-
-  def fetch
-    Logger.info("Starting fetch topic titles from #{@pn} to #{@pn + 50}.")
-    @page = Nokogiri::HTML(open url)
-    Logger.info('Done!')
-  end
-
-  def topic_nodes
-    page.css('.t_con.cleafix')
   end
 
   def serialize
@@ -52,5 +42,15 @@ class Tieba
   private
   def url
     URI.escape("https://tieba.baidu.com/f?kw=#{@name}&ie=utf-8&pn=#{@pn}")
+  end
+
+  def fetch
+    Logger.info("Starting fetch topic titles from #{@pn} to #{@pn + 50}.")
+    @page = Nokogiri::HTML(open url)
+    Logger.info('Done!')
+  end
+
+  def topic_nodes
+    page.css('.t_con.cleafix')
   end
 end

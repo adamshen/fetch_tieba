@@ -8,16 +8,12 @@ class Node
   def self.serialize(nk_node)
     node = new(nk_node)
     username = node.select_text('.frs-author-name-wrap a')
-    user = if username
-             User.find_or_create_by(name: username)
-           else
-             nil
-           end
+    user = username ? User.find_or_create_by(name: username) : nil
 
     topic = Topic.new
     topic.title = node.select_attr('.threadlist_title a', 'title')
     topic.rep_num = node.select_text('.threadlist_rep_num')
-    topic.user = user
+    topic.user = user if user
 
     topic
   end

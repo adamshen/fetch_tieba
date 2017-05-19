@@ -21,5 +21,6 @@ task :demo do
   (1..100).each do |_|
     tieba.serialize
     tieba.next_page
+    sleep 2
   end
 end
