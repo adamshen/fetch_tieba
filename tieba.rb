@@ -9,9 +9,10 @@ require_relative 'models/topic'
 require_relative 'models/user'
 
 require_relative 'lib/node'
+require_relative 'lib/logger'
 
 class Tieba
-  attr_accessor :page, :topic
+  attr_accessor :page, :topic, :page_num
 
   def initialize(name)
     @name = name
@@ -26,7 +27,9 @@ class Tieba
   end
 
   def fetch
+    Logger.info("Starting fetch topic titles from #{@pn} to #{@pn + 50}.")
     @page = Nokogiri::HTML(open url)
+    Logger.info('Done!')
   end
 
   def topic_nodes
@@ -36,8 +39,12 @@ class Tieba
   def serialize
     @prev_topic_titles = topic_nodes.map do |topic_node|
       topic = Node.serialize(topic_node)
-      next if @prev_topic_titles.include?(topic.title)
+      if @prev_topic_titles.include?(topic.title)
+        Logger.info("#{topic.title} has been saved. Drop it!")
+        next
+      end
       topic.save
+      Logger.info("#{topic.title} saved.")
       topic.title
     end
   end
