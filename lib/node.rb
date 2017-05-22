@@ -12,7 +12,9 @@ class Node
 
     topic = Topic.new
     topic.title = node.select_attr('.threadlist_title a', 'title')
+    topic.href = node.select_attr('.threadlist_title a', 'href')
     topic.rep_num = node.select_text('.threadlist_rep_num')
+    topic.create_data = node.select_text('.is_show_create_time')
     topic.user = user if user
 
     topic

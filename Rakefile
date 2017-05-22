@@ -6,6 +6,8 @@ task :create_db do
 
   connection.create_table(:topics) do |t|
     t.string :title
+    t.string :href
+    t.string :create_data
     t.integer :rep_num
     t.belongs_to :user
   end
