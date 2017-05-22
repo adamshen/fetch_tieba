@@ -9,6 +9,7 @@ require_relative 'models/topic'
 require_relative 'models/user'
 
 require_relative 'lib/node'
+require_relative 'lib/topic_node'
 require_relative 'lib/logger'
 
 class Tieba
@@ -28,7 +29,7 @@ class Tieba
 
   def serialize
     @prev_topic_titles = topic_nodes.map do |topic_node|
-      topic = Node.serialize(topic_node)
+      topic = TopicNode.serialize(topic_node)
       if @prev_topic_titles.include?(topic.title)
         Logger.info("#{topic.title} has been saved. Drop it!")
         next
