@@ -26,3 +26,7 @@ task :demo do
     sleep 2
   end
 end
+
+task :web do
+  `ruby web/app.rb`
+end
