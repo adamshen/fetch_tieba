@@ -5,12 +5,7 @@ require 'open-uri'
 require 'active_record'
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'store.sqlite3').connection
 
-require_relative 'models/topic'
-require_relative 'models/user'
-
-require_relative 'lib/node'
-require_relative 'lib/topic_node'
-require_relative 'lib/logger'
+Dir.glob(File.join(File.dirname(__FILE__), '**', '*.rb'), &method(:require))
 
 class Tieba
   attr_accessor :page
